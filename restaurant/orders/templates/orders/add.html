@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Добавление заказа{% endblock %}
+
+{% block main %}
+    <div class="add-block">
+        <h1>Добавление заказа</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="ingridients-check-list">
+                {% for dish in dishes %}
+                    <div class="ingridient-check-item">
+                        <input id="dishInput" type="number" min="0" name="{{ dish.name }}" value="0">
+                        <label for="dishInput">{{ dish.name }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <span>{{ error }}</span>
+            <span>{{ order.cost }} руб.</span>
+            <button class="btn btn-success" type="submit"><i class="fa-solid fa-check"></i></button>
+        </form>
+    </div>
+{% endblock %}

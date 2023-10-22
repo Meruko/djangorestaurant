@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Ингридиенты{% endblock %}
+
+{% block main %}
+    <div class="models">
+        {% if ingridients %}
+            {% for ingridient in ingridients %}
+                <div>
+                    <h2>{{ ingridient.name }}</h2>
+                    <p>{{ ingridient.price }} руб.</p>
+                    <p>{{ ingridient.count }} шт.</p>
+
+                    <div class="btns">
+                        <a href="{% url 'update_ingridient' ingridient.id %}" class="btn btn-info"><i class="fa-solid fa-pencil"></i></a>
+                        <form method="delete">
+                            {% csrf_token %}
+                            <a href="{% url 'delete_ingridient' ingridient.id %}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a>
+                        </form>
+                    </div>
+                </div>
+            {%endfor%}
+        {% else %}
+            <span>Нет ингридиентов!</span>
+        {% endif %}
+    </div>
+    <a href="{% url 'add_ingridient' %}" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></a>
+{% endblock %}

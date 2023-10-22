@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Заказы{% endblock %}
+
+{% block main %}
+    <div class="models">
+        {% if orders %}
+            {% for order in orders %}
+                <div>
+                    <h2>{{ order.date }}</h2>
+                    <p>{{ order.cost }} руб.</p>
+                    <h4>Состав:</h4>
+                    {% if order.dishes.all %}
+                        {% for dish in order.dishes.all %}
+                            <p>{{ dish.name }}</p>
+                        {% endfor %}
+                    {% else %}
+                        <p>Состава нет</p>
+                    {% endif %}
+
+                    <div class="btns">
+                        <form method="delete">
+                            {% csrf_token %}
+                            <a href="{% url 'delete_order' order.id %}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a>
+                        </form>
+                    </div>
+                </div>
+            {%endfor%}
+        {% else %}
+            <span>Нет заказов!</span>
+        {% endif %}
+    </div>
+    <a href="{% url 'add_order' %}" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></a>
+{% endblock %}

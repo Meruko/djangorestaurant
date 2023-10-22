@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Блюда{% endblock %}
+
+{% block main %}
+    <div class="models">
+        {% if dishes %}
+            {% for dish in dishes %}
+                <div>
+                    <h2>{{ dish.name }}</h2>
+                    <p>{{ dish.default_price }} руб.</p>
+
+                    <div class="btns">
+                        <a href="{% url 'update_dish' dish.id %}" class="btn btn-info"><i class="fa-solid fa-pencil"></i></a>
+                        <form method="delete">
+                            {% csrf_token %}
+                            <a href="{% url 'delete_dish' dish.id %}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a>
+                        </form>
+                    </div>
+                </div>
+            {%endfor%}
+        {% else %}
+            <span>Нет блюд!</span>
+        {% endif %}
+    </div>
+    <a href="{% url 'add_dish' %}" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></a>
+{% endblock %}

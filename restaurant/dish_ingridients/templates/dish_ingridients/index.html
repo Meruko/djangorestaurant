@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Блюда с составом{% endblock %}
+
+{% block main %}
+    <div class="models">
+        {% if dishes %}
+            {% for dish in dishes %}
+                <div>
+                    <h2>{{ dish.name }}</h2>
+                    <p>{{ dish.default_price }} руб.</p>
+                    <h4>Состав:</h4>
+                    {% if dish.ingridients.all %}
+                        {% for ingridient in dish.ingridients.all %}
+                            <p>{{ ingridient }}</p>
+                        {% endfor %}
+                    {% else %}
+                        <p>Состава нет</p>
+                    {% endif %}
+
+                    <div class="btns">
+                        <a href="{% url 'update_dish_ingridients' dish.id %}" class="btn btn-info"><i class="fa-solid fa-pencil"></i></a>
+                    </div>
+                </div>
+            {%endfor%}
+        {% else %}
+            <span>Нет блюд!</span>
+        {% endif %}
+    </div>
+    <a href="{% url 'add_dish' %}" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></a>
+{% endblock %}

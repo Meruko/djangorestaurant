@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Добавление состава блюда{% endblock %}
+
+{% block main %}
+    <div class="add-block">
+        <h1>Добавление состава блюда</h1>
+        <h4>{{ dish.name }}</h4>
+        <form method="post">
+            {% csrf_token %}
+            <div class="ingridients-check-list">
+                {% for ing, checked in ingridients.items %}
+                    <div class="ingridient-check-item">
+                        {% if checked %}
+                            <input id="ingInput" type="checkbox" name="{{ ing.name }}" value="{{ ing.id }}" checked>
+                        {% else %}
+                            <input id="ingInput" type="checkbox" name="{{ ing.name }}" value="{{ ing.id }}">
+                        {% endif %}
+                        <label for="ingInput">{{ ing.name }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <span>{{ error }}</span>
+            <button class="btn btn-success" type="submit"><i class="fa-solid fa-check"></i></button>
+        </form>
+    </div>
+{% endblock %}
